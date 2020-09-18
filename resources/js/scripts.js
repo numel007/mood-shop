@@ -41,3 +41,72 @@ for (let i=0; i<data.length; ++i) {
     // put new div inside items container
     itemsContainer.appendChild(newDiv)
 }
+
+const cart = []
+
+//Add Item
+function addItem(name, price) {
+  for (let i=0; i<cart.length; i+=1) {
+    if (cart[i].name === name) {
+      cart[i].qty += 1
+      return
+    }
+  }
+  const item = {name, price, qty:1 }
+  cart.push(item)
+}
+
+
+// Show Items
+function showItems() {
+
+  console.log(`You have ${getQty()} items in  your cart.`)
+  for (let i=0; i<cart.length; i+=1) {
+    console.log(`${cart[i].name } ${cart[i].price} x ${cart[i].qty}`)
+  }
+
+  console.log(`Total in cart: ${getTotal()}`)
+}
+
+
+//Get Qty
+function getQty() {
+  let qty = 0
+  for (let i=0; i<cart.length; i+=1) {
+    qty += cart[i].qty
+  }
+  return qty
+}
+
+
+//Get Total
+  function getTotal() {
+    let total = 0
+    for (let i=0; i<cart.length; i+=1) {
+      total += cart[i].price * cart[i].qty
+    }
+    return total.toFixed(2)
+  }
+
+function removeItem(name, qty = 0) {
+    for (let i=0; i<cart.length; i+=1) {
+        if (cart[i].name === name){
+            if (qty > 0) {
+                cart[i].qty -= qty
+            }
+            if (cart[i].qty < 1 || qty === 0){
+                cart.splice(i,1)
+            }
+            return 
+        }
+    }
+}
+//-------------------------------------
+addItem("Apple", 0.99)
+addItem("Orange", 1.29)
+addItem("Opinion", 0.02)
+addItem("Frisbee", 9.99)
+addItem("Apple", 0.99)
+showItems()
+removeItem("Frisbee")
+showItems()
